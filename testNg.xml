@@ -1,0 +1,7 @@
+<suite name="Time test Suite" verbose="1">
+    <test name="Group Test">
+        <classes>
+            <class name="HomePageVerification" />
+        </classes>
+    </test>
+</suite>
