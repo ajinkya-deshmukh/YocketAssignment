@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <suite name="Time test Suite" verbose="1">
-    <test name="Group Test" parallel="methods" thread-count="3" >
+    <test name="Chrome Tests" parallel="methods" thread-count="1" >
+        <parameter name="browser" value="chrome" />
         <classes>
             <class name="HomePageVerification" />
+            <class name="CollegeFinderMastersTest" />
         </classes>
     </test>
-    <test name="College Finder Tests" >
+    <test name="Firefox Tests" parallel="methods" thread-count="1" >
+        <parameter name="browser" value="firefox" />
         <classes>
+            <class name="HomePageVerification" />
             <class name="CollegeFinderMastersTest" />
         </classes>
     </test>
