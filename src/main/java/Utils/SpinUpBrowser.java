@@ -3,7 +3,6 @@ package Utils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.*;
 
 public class SpinUpBrowser {
@@ -33,7 +32,6 @@ public class SpinUpBrowser {
 
     public static WebDriver SpinUpBrowser(String browsername , String url)
     {
-        System.out.println("This is the bwoser name inside " + browsername);
         if(browsername.equalsIgnoreCase("Firefox"))
         {
             // Set the path for geckodriver

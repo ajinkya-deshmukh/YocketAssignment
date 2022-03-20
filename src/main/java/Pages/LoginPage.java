@@ -13,5 +13,4 @@ public class LoginPage {
 
     @FindBy(xpath = "//input[@id='phone']/following-sibling::p")
     WebElement txtPhoneNumberValidationMessage;
-
 }
