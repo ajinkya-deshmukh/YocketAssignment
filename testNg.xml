@@ -1,9 +1,13 @@
-
-<suite name="Time test Suite" verbose="1" parallel = "methods" thread-count = "2">
-    <test name="Group Test" >
+<?xml version="1.0" encoding="UTF-8" ?>
+<suite name="Time test Suite" verbose="1">
+    <test name="Group Test" parallel="methods" thread-count="3" >
         <classes>
             <class name="HomePageVerification" />
-            <class name="CollegeFinderMastersTest"/>
+        </classes>
+    </test>
+    <test name="College Finder Tests" >
+        <classes>
+            <class name="CollegeFinderMastersTest" />
         </classes>
     </test>
 </suite>
