@@ -25,9 +25,15 @@ public class CollegeFinderMastersTest extends SpinUpBrowser{
         homePage = new HomePage(driver);
         collegeFinder = new CollegeFinderPage(driver);
         universityResultsPage = new UniversityResultsPage(driver);
-        collegeFinder.findMastersCollege();
+        collegeFinder.findMastersCollegePositiveFlow();
         universityResultsPage.verifyCollegeFinderSubmission();
     }
 
-
+    @Test
+    public void  findMastersCollegeNegativeFlow() throws InterruptedException {
+        homePage = new HomePage(driver);
+        collegeFinder = new CollegeFinderPage(driver);
+        universityResultsPage = new UniversityResultsPage(driver);
+        collegeFinder.validateRequiredFieldsCollegeFinder();
+    }
 }

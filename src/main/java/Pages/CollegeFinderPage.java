@@ -79,6 +79,9 @@ public class CollegeFinderPage extends SpinUpBrowser{
     @FindBy(xpath = "//div[contains(text(),'None')]")
     WebElement btnNone;
 
+    @FindBy(xpath = "//div[contains(text(),'GRE')]")
+    WebElement btnGRE;
+
     @FindBy(id = "work_exp")
     WebElement txtWorkExp;
 
@@ -90,6 +93,39 @@ public class CollegeFinderPage extends SpinUpBrowser{
 
     @FindBy(xpath = "//button[@type='submit' and contains(text(),'Find Universities')]")
     WebElement btnFindUniversities;
+
+    @FindBy(xpath = "//span[contains(text(),'Required field')]/parent::span//div[@id='country']")
+    WebElement lblRequireTextCountry;
+
+    @FindBy(xpath = "//span[contains(text(),'Required field')]/parent::span//div[@id='area_of_study']")
+    WebElement lblRequireTextAreaOfStudy;
+
+    @FindBy(xpath = "//span[contains(text(),'Required field')]/parent::span//div[@id='college']")
+    WebElement lblRequireTextCollegeName;
+
+    @FindBy(xpath = "//span[contains(text(),'Required field')]/parent::span//div[@id='major']")
+    WebElement lblRequireTextMajor;
+
+    @FindBy(xpath = "//span[contains(text(),'Required field')]//preceding-sibling::div//input[@id='marks']")
+    WebElement lblRequireTextMarks;
+
+    @FindBy(xpath = "//*[contains(text(),'Required field')]//parent::div//*[contains(text(),'IELTS')]")
+    WebElement lblRequireTextIELTS;
+
+    @FindBy(xpath = "//*[contains(text(),'Required field')]//parent::div//*[contains(text(),'GRE')]")
+    WebElement lblRequireTexGRE;
+
+    @FindBy(xpath = "//span[@class='text-red-600']//preceding-sibling::input[@id='ielts_overall_score']")
+    WebElement lblRequireTextIELTSOverallScore;
+
+    @FindBy(xpath = "//span[@class='text-red-600']//preceding-sibling::input[@id='verbal_score']")
+    WebElement lblRequireTextVerbalScore;
+
+    @FindBy(xpath = "//span[@class='text-red-600']//preceding-sibling::input[@id='quant_score']")
+    WebElement lblRequireTextQuantScore;
+
+    @FindBy(xpath = "//span[@class='text-red-600']//preceding-sibling::input[@id='awa_score']")
+    WebElement lblRequireTextAWAScore;
 
     WebDriver driver;
 
@@ -107,7 +143,7 @@ public class CollegeFinderPage extends SpinUpBrowser{
         btnMasters.click();
     }
 
-    public void findMastersCollege() throws InterruptedException {
+    public void findMastersCollegePositiveFlow() throws InterruptedException {
         HomePage homePage = new HomePage(driver);
         CollegeFinderPage collegeFinder = new CollegeFinderPage(driver);
         homePage.clickOnCollegeFinder();
@@ -156,6 +192,81 @@ public class CollegeFinderPage extends SpinUpBrowser{
         btnInternationalPapers.click();
         txtProject.sendKeys(Constants.NUMBER_PROJECTS);;
         btnFindUniversities.click();
+        softassert.assertAll();
+    }
+
+    public void validateRequiredFieldsCollegeFinder() throws InterruptedException {
+        HomePage homePage = new HomePage(driver);
+        CollegeFinderPage collegeFinder = new CollegeFinderPage(driver);
+        homePage.clickOnCollegeFinder();
+
+        // Start College Finder
+        wait.until(ExpectedConditions.visibilityOf(btnMasters));
+        btnMasters.click();
+        wait.until(ExpectedConditions.visibilityOf(lblHeaderTextStep1));
+        softassert.assertTrue(lblHeaderTextStep1.isDisplayed());
+
+        // Validate Required Field
+        btnNext.click();
+        softassert.assertTrue(lblRequireTextCountry.isDisplayed());
+        softassert.assertTrue(lblRequireTextAreaOfStudy.isDisplayed());
+
+        dropdownCountry.click();
+        dropdownCountry.sendKeys(Constants.MASTER_COUNTRY);
+        dropdownCountry.sendKeys(Keys.ENTER);
+
+        dropdownAreaOfStudy.click();
+        dropdownAreaOfStudy.sendKeys(Constants.MASTER_SUBJECT);
+        wait.until(ExpectedConditions.visibilityOf(searchSubject));
+        dropdownAreaOfStudy.sendKeys(Keys.ENTER);
+
+        btnNext.click();
+
+        // Enter University Details
+        wait.until(ExpectedConditions.visibilityOf(dropdownUniversity));
+
+        // Validate required field
+        btnNext.click();
+        softassert.assertTrue(lblRequireTextCollegeName.isDisplayed());
+        softassert.assertTrue(lblRequireTextMajor.isDisplayed());
+
+        dropdownUniversity.sendKeys(Constants.UNIVERSITY_NAME);
+        wait.until(ExpectedConditions.visibilityOf(universityFirstOption));
+        dropdownUniversity.sendKeys(Keys.ENTER);
+
+        dropdownMajor.sendKeys(Constants.MAJOR_NAME);
+        wait.until(ExpectedConditions.visibilityOf(majorFirstOption));
+        dropdownMajor.sendKeys(Keys.ENTER);
+
+        txtMarks.sendKeys(Constants.GPA);
+        btnNext.click();
+
+        // Enter External Scores
+        wait.until(ExpectedConditions.visibilityOf(btnIELTS));
+
+        // Validate Required Field
+
+        btnIELTS.click();
+        btnGRE.click();
+        btnNext.click();
+        softassert.assertTrue(lblRequireTextIELTSOverallScore.isDisplayed());
+        softassert.assertTrue(lblRequireTextVerbalScore.isDisplayed());
+        softassert.assertTrue(lblRequireTextQuantScore.isDisplayed());
+        softassert.assertTrue((lblRequireTextAWAScore.isDisplayed()));
+
+
+        btnIELTS.click();
+        txtIELTSScore.sendKeys(Constants.VALID_IELTS_SCORE);
+
+        btnNone.click();
+        btnNext.click();
+
+        // Enter Exp Details
+        wait.until(ExpectedConditions.visibilityOf(txtWorkExp));
+
+        txtWorkExp.sendKeys(Constants.WORK_EXP);
+        btnInternationalPapers.click();
+        txtProject.sendKeys(Constants.NUMBER_PROJECTS);;
         softassert.assertAll();
     }
 }
