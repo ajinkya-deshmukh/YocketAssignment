@@ -3,13 +3,23 @@ package Utils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 
 public class SpinUpBrowser {
 
-    static WebDriver driver;
+    public static WebDriver driver;
 
-//    public SpinUpBrowser(WebDriver driver) {
-//        this.driver = driver;
+    @BeforeTest
+    public WebDriver start(){
+        driver = SpinUpBrowser.SpinUpBrowser("chrome", Constants.BASE_URL);
+        return driver;
+    }
+
+//    @AfterTest
+//    public void tearDown(){
+//        driver.quit();
 //    }
 
     public static WebDriver SpinUpBrowser(String browsername , String url)
