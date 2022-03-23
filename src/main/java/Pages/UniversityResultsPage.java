@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
+import java.time.Duration;
+
 public class UniversityResultsPage {
 
     @FindBy(id = "modal-headline")
@@ -25,7 +27,7 @@ public class UniversityResultsPage {
 
     public UniversityResultsPage(WebDriver driver){
         this.driver = driver;
-        wait = new WebDriverWait(driver, 15, 50);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
     }
 

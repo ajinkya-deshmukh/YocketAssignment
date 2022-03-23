@@ -11,7 +11,7 @@ public class SpinUpBrowser {
 
     @Parameters("browser")
     @BeforeMethod
-    public WebDriver start(String browser){
+    public WebDriver start(@Optional("Chrome") String browser){
         if (browser.equalsIgnoreCase("chrome")){
             driver = SpinUpBrowser.SpinUpBrowser("chrome", Constants.BASE_URL);
             return driver;
