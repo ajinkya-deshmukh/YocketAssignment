@@ -2,9 +2,8 @@ package Pages;
 
 import Utils.Constants;
 import Utils.SpinUpBrowser;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -20,8 +19,8 @@ public class CollegeFinderPage extends SpinUpBrowser{
     @FindBy(xpath = "//button[contains(text(),'Masters')]")
     WebElement btnMasters;
 
-    @FindBy(xpath = "//div[@documentclick='']")
-    WebElement btnCloseChatWindow;
+//    @FindBy(xpath = "//div[@documentclick='']")
+//    WebElement btnCloseChatWindow;
 
     @FindBy(xpath = "//*[contains(text(),'TAKE US THROUGH YOUR DREAM EDUCATION')]")
     WebElement lblHeaderTextStep1;
@@ -129,6 +128,15 @@ public class CollegeFinderPage extends SpinUpBrowser{
     @FindBy(xpath = "//span[@class='text-red-600']//preceding-sibling::input[@id='awa_score']")
     WebElement lblRequireTextAWAScore;
 
+    @FindBy(xpath = "//div[@themeid='8']")
+    WebElement btnCloseChatWindow;
+
+    @FindBy(xpath = "//iframe[@id='siqiframe']")
+    WebElement iFrame;
+
+    @FindBy(xpath = "//div[@data-id='zsalesiq']")
+    WebElement btnOpenChatWindow;
+
     WebDriver driver;
 
     private WebDriverWait wait;
@@ -153,6 +161,22 @@ public class CollegeFinderPage extends SpinUpBrowser{
         // Start College Finder
         wait.until(ExpectedConditions.visibilityOf(btnMasters));
         btnMasters.click();
+        Thread.sleep(11000);
+
+        // Opening chat window manually as the chat is not opening automatically (must be time based feature)
+        if(!btnCloseChatWindow.isDisplayed()){
+            btnOpenChatWindow.click();
+        }
+        // Switching to the chat window iframe
+        driver.switchTo().frame(iFrame);
+        // Waiting for the close button
+        wait.until(ExpectedConditions.visibilityOf(btnCloseChatWindow));
+        // Clicking on Closing button inside the chat iFrame
+        btnCloseChatWindow.click();
+        // Switching back to the base/normal window for the yocket application
+        driver.switchTo().defaultContent();
+
+        // Continue with the test after closing chat window.
         wait.until(ExpectedConditions.visibilityOf(lblHeaderTextStep1));
         softassert.assertTrue(lblHeaderTextStep1.isDisplayed());
         dropdownCountry.click();
@@ -192,7 +216,7 @@ public class CollegeFinderPage extends SpinUpBrowser{
         wait.until(ExpectedConditions.visibilityOf(txtWorkExp));
         txtWorkExp.sendKeys(Constants.WORK_EXP);
         btnInternationalPapers.click();
-        txtProject.sendKeys(Constants.NUMBER_PROJECTS);;
+        txtProject.sendKeys(Constants.NUMBER_PROJECTS);
         btnFindUniversities.click();
         softassert.assertAll();
     }
